@@ -1,0 +1,25 @@
+{
+  "name": "azure-functions",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w",
+    "prestart": "npm run build",
+    "start": "func start",
+    "test": "echo \"No tests yet...\""
+  },
+  "dependencies": {
+    "@typegoose/typegoose": "^9.12.1",
+    "class-validator": "^0.13.2",
+    "graphql": "^15.8.0",
+    "mongoose": "^6.6.7",
+    "type-graphql": "^1.1.1",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@azure/functions": "^3.0.0",
+    "@types/node": "16.x",
+    "typescript": "^4.0.0"
+  }
+}

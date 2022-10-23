@@ -6,16 +6,16 @@
       "command": "host start",
       "problemMatcher": "$func-node-watch",
       "isBackground": true,
-      "dependsOn": "npm build (functions)",
+      "dependsOn": "yarn build (functions)",
       "options": {
         "cwd": "${workspaceFolder}"
       }
     },
     {
       "type": "shell",
-      "label": "npm build (functions)",
-      "command": "npm run build",
-      "dependsOn": "npm install (functions)",
+      "label": "yarn build (functions)",
+      "command": "yarn build",
+      "dependsOn": "yarn (functions)",
       "problemMatcher": "$tsc",
       "options": {
         "cwd": "${workspaceFolder}"
@@ -23,8 +23,8 @@
     },
     {
       "type": "shell",
-      "label": "npm install (functions)",
-      "command": "npm install",
+      "label": "yarn (functions)",
+      "command": "yarn",
       "options": {
         "cwd": "${workspaceFolder}"
       }
@@ -33,7 +33,7 @@
       "type": "shell",
       "label": "npm prune (functions)",
       "command": "npm prune --production",
-      "dependsOn": "npm build (functions)",
+      "dependsOn": "yarn build (functions)",
       "problemMatcher": [],
       "options": {
         "cwd": "${workspaceFolder}"

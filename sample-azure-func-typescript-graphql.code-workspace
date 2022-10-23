@@ -5,9 +5,47 @@
     },
     {
       "path": "web"
+    },
+    {
+      "path": "common"
     }
   ],
   "settings": {
-    "debug.internalConsoleOptions": "neverOpen"
+
+    "jest.disabledWorkspaceFolders": [".github", "deploy", "common"],
+    "debug.internalConsoleOptions": "neverOpen",
+    "cSpell.words": ["Todos",
+    "Čeština",
+    "codegen",
+    "commitlint",
+    "datatable",
+    "Deap",
+    "encall",
+    "fileupload",
+    "Gridlines",
+    "inputgroup",
+    "inputswitch",
+    "inputtext",
+    "inputtextarea",
+    "kitql",
+    "Lngs",
+    "Msal",
+    "multiselect",
+    "openapi",
+    "PREFILLED",
+    "Pricelist",
+    "primeflex",
+    "primeicons",
+    "primereact",
+    "progressspinner",
+    "signalr",
+    "speeddial",
+    "tabview",
+    "testid",
+    "tieredmenu",
+    "typecheck",
+    "Upsert",
+    "vite",
+    "vitejs"]
   }
 }

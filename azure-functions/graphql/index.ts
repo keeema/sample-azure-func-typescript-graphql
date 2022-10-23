@@ -10,7 +10,7 @@ const httpTrigger: AzureFunction = async function (
   context: Context,
   req: HttpRequest
 ): Promise<void> {
-  const mongoose = await mongooseSingleton;
+  await mongooseSingleton;
 
   const schema = await buildSchema({
     resolvers: [TaskResolver],

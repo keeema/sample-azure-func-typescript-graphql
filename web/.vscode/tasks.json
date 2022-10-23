@@ -1,0 +1,42 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build-web-react",
+      "command": "yarn dev",
+      "type": "shell",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": {
+          "regexp": "_____"
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*Waiting for debug connection.*$",
+          "endsPattern": "^.*Local.*$"
+        }
+      }
+    },
+    {
+      "label": "open-chrome-debug-mac",
+      "command": "open -a \"Google Chrome\" http://localhost:3000 --args --remote-debugging-port=9222",
+      "type": "shell"
+    },
+    {
+      "label": "build-and-open-chrome-debug-mac",
+      "command": "open -a \"Google Chrome\" http://localhost:3000 --args --remote-debugging-port=9222",
+      "type": "shell",
+      "dependsOn": ["build-web-react"]
+    },
+    {
+      "label": "build-and-open-chromium-debug-linux",
+      "command": "chromium --args --remote-debugging-port=9222 --new-window http://localhost:3000",
+      "type": "shell",
+      "dependsOn": ["build-web-react"]
+    }
+  ]
+}

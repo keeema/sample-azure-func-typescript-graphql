@@ -3,12 +3,12 @@ import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 
-import { useAddTask } from "./taskApi";
+import { useAddTaskMutation, useTasksQuery } from "@/api/graphql/generated";
 
 export function TodoForm(): JSX.Element {
   const [title, setTitle] = useState("");
   const [userName, setUserName] = useState("");
-  const { mutateAsync: addTask } = useAddTask();
+  const { mutateAsync: addTask } = useAddTaskMutation();
   const queryClient = useQueryClient();
 
   return (
@@ -47,7 +47,7 @@ export function TodoForm(): JSX.Element {
               await addTask({ userName: userName.trim(), task: title.trim() });
               setTitle("");
               setUserName("");
-              queryClient.refetchQueries(["get-tasks"]);
+              queryClient.refetchQueries(useTasksQuery.getKey());
             } catch (error) {
               alert(error);
             }

@@ -2,24 +2,34 @@ import { Button } from "primereact/button";
 import { Column } from "primereact/column";
 import { DataTable } from "primereact/datatable";
 
-import { useDeleteTask, useTasks } from "./taskApi";
+import {
+  TasksQuery,
+  useDeleteTaskMutation,
+  useTasksQuery,
+} from "@/api/graphql/generated";
 
 export function TodoList(): JSX.Element {
-  const { data: tasks, isLoading, refetch } = useTasks();
-  const { mutateAsync: deleteTask } = useDeleteTask();
+  const { data, isLoading, refetch } = useTasksQuery();
+  const { mutateAsync: deleteTask } = useDeleteTaskMutation();
 
-  return isLoading ? (
+  return isLoading || !data?.tasks ? (
     <>Načítám</>
   ) : (
     <DataTable
       scrollable
-      value={tasks}
+      value={data.tasks}
       responsiveLayout="scroll"
       emptyMessage="Žádné úkoly"
       className="h-full w-full"
     >
-      <Column header="Úkol" body={item => item.title}></Column>
-      <Column header="Osoba" body={item => item.user.fullName}></Column>
+      <Column
+        header="Úkol"
+        body={(item: TasksQuery["tasks"][0]) => item.title}
+      ></Column>
+      <Column
+        header="Osoba"
+        body={(item: TasksQuery["tasks"][0]) => item.user.fullName}
+      ></Column>
       <Column
         header="Splnění"
         body={item => (

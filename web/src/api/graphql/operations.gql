@@ -1,0 +1,25 @@
+query tasks {
+  tasks {
+    _id
+    title
+    user {
+      fullName
+    }
+  }
+}
+
+mutation addTask($userName: String!, $task: String!) {
+  addTask(userName: $userName, task: $task) {
+    _id
+    title
+    user {
+      fullName
+    }
+  }
+}
+
+mutation deleteTask($id: String!) {
+  deleteTask(id: $id) {
+    _id
+  }
+}

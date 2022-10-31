@@ -1,15 +1,13 @@
-import { useQueryClient } from "@tanstack/react-query";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { useState } from "react";
 
-import { useAddTaskMutation, useTasksQuery } from "@/api/graphql/generated";
+import { useAddTaskMutation } from "@/api/graphql/generated";
 
 export function TodoForm(): JSX.Element {
   const [title, setTitle] = useState("");
   const [userName, setUserName] = useState("");
   const { mutateAsync: addTask } = useAddTaskMutation();
-  const queryClient = useQueryClient();
 
   return (
     <div className="flex flex-column w-full justify-content-start">
@@ -47,7 +45,6 @@ export function TodoForm(): JSX.Element {
               await addTask({ userName: userName.trim(), task: title.trim() });
               setTitle("");
               setUserName("");
-              queryClient.refetchQueries(useTasksQuery.getKey());
             } catch (error) {
               alert(error);
             }

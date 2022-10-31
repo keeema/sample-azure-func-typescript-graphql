@@ -3,6 +3,7 @@ import { graphql } from "graphql";
 import { buildSchema } from "type-graphql";
 import { TaskResolver } from "./model/todo/task.resolver";
 import { mongooseFactory } from "./utils/database/mongooseFactory";
+import { SignalRPubSub } from "./utils/signalR/SignalRPubSub";
 
 const mongooseSingleton = mongooseFactory();
 
@@ -11,9 +12,13 @@ const httpTrigger: AzureFunction = async function (
   req: HttpRequest
 ): Promise<void> {
   await mongooseSingleton;
+  const signalRPubSub = new SignalRPubSub(
+    (context.bindings.signalRGraphQLSubscriptions = [])
+  );
 
   const schema = await buildSchema({
     resolvers: [TaskResolver],
+    pubSub: signalRPubSub,
   });
 
   const result = await graphql({

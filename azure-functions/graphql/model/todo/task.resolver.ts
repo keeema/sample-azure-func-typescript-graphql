@@ -1,6 +1,13 @@
 import { DocumentType } from "@typegoose/typegoose";
 
-import { Arg, Mutation, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Mutation,
+  Publisher,
+  PubSub,
+  Query,
+  Resolver,
+} from "type-graphql";
 
 import { v4 as uuid } from "uuid";
 import { Task, TaskModel } from "./task.entity";
@@ -16,7 +23,8 @@ export class TaskResolver {
   @Mutation(() => Task)
   async addTask(
     @Arg("task") title: string,
-    @Arg("userName") userName: string
+    @Arg("userName") userName: string,
+    @PubSub("taskAdded") publish: Publisher<{ id: string }>
   ): Promise<DocumentType<Task>> {
     let user = await UserModel.findOne({ fullName: userName });
 
@@ -24,16 +32,24 @@ export class TaskResolver {
       user = await UserModel.create({ _id: uuid(), fullName: userName });
     }
 
-    return await TaskModel.create({
+    const result = await TaskModel.create({
       _id: uuid(),
       title,
       user,
       userId: user._id,
     });
+
+    publish({ id: result._id });
+    return result;
   }
 
   @Mutation(() => Task)
-  async deleteTask(@Arg("id") id: string): Promise<DocumentType<Task>> {
-    return await TaskModel.findByIdAndDelete(id);
+  async deleteTask(
+    @Arg("id") id: string,
+    @PubSub("taskDeleted") publish: Publisher<{ id: string }>
+  ): Promise<DocumentType<Task>> {
+    const result = await TaskModel.findByIdAndDelete(id);
+    publish({ id });
+    return result;
   }
 }

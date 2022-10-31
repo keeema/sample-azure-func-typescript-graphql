@@ -1,11 +1,13 @@
 {
+  "disabled": false,
   "bindings": [
     {
       "authLevel": "anonymous",
       "type": "httpTrigger",
       "direction": "in",
+      "methods": ["post"],
       "name": "req",
-      "methods": ["get", "post"]
+      "route": "negotiate"
     },
     {
       "type": "http",
@@ -13,12 +15,12 @@
       "name": "res"
     },
     {
-      "type": "signalR",
-      "name": "signalRGraphQLSubscriptions",
+      "type": "signalRConnectionInfo",
+      "name": "connectionInfo",
       "hubName": "graphqlsubscriptions",
       "connectionStringSetting": "AzureSignalRConnectionString",
-      "direction": "out"
+      "direction": "in"
     }
   ],
-  "scriptFile": "../dist/graphql/index.js"
+  "scriptFile": "../dist/negotiate/index.js"
 }

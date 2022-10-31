@@ -7,10 +7,13 @@ import {
   useDeleteTaskMutation,
   useTasksQuery,
 } from "@/api/graphql/generated";
+import { useSubscription } from "@/api/subscriptions/useSubscription";
 
 export function TodoList(): JSX.Element {
   const { data, isLoading, refetch } = useTasksQuery();
   const { mutateAsync: deleteTask } = useDeleteTaskMutation();
+  useSubscription("taskAdded", () => refetch());
+  useSubscription("taskDeleted", () => refetch());
 
   return isLoading || !data?.tasks ? (
     <>Načítám</>
@@ -39,7 +42,6 @@ export function TodoList(): JSX.Element {
             onClick={async () => {
               try {
                 await deleteTask({ id: item._id });
-                refetch();
               } catch (error) {
                 alert(error);
               }

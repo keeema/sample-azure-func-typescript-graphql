@@ -8,15 +8,18 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StrictMode } from "react";
 import ReactDOM from "react-dom";
 
+import SubscriptionProvider from "./api/subscriptions/SubscriptionProvider";
 import App from "./App";
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <SubscriptionProvider>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </SubscriptionProvider>
   </StrictMode>,
   document.getElementById("root")
 );
